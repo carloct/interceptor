@@ -1,0 +1,12 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": [
+    "stylelint-no-unsupported-browser-features"
+  ],
+  "rules": {
+    "value-list-comma-newline-after": null,
+    "declaration-colon-newline-after": null,
+    "plugin/no-unsupported-browser-features": true
+  },
+  "defaultSeverity": "warning"
+}
