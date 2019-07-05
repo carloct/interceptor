@@ -69,16 +69,21 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
+    "apollo-boost": "^0.4.3",
+    "apollo-link-ws": "^1.0.18",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "dotenv": "^6.2.0",
     "formik": "^1.5.6",
+    "graphql": "^14.4.2",
     "react": "^16.8.6",
+    "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
     "react-modal": "^3.8.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "subscriptions-transport-ws": "^0.9.16",
     "yup": "^0.27.0"
   },
   "browserslist": [
