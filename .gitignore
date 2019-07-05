@@ -1,9 +1,6 @@
 # OS
 .DS_Store
 
-# Server
-server/node_modules/
-
 # Client
 node_modules/
 dist/
