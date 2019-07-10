@@ -3,9 +3,8 @@ import { WebSocketLink } from 'apollo-link-ws'
 import { ApolloLink, split } from 'apollo-boost'
 import { getMainDefinition } from 'apollo-utilities'
 
-const { API_ROOT } = process.env
 
-const httpLink = new HttpLink({ uri: API_ROOT })
+const httpLink = new HttpLink({ uri: process.env.GRAPHQL_URI })
 
 const httpAuthMiddleware = new ApolloLink((operation, forward) => {
   const token = localStorage.getItem('token')
@@ -19,10 +18,10 @@ const httpAuthMiddleware = new ApolloLink((operation, forward) => {
   return (forward) ? forward(operation) : null
 })
 
-const httpLinkAuth = ApolloLink.from([httpLink, httpAuthMiddleware])
+const httpLinkAuth = ApolloLink.from([httpAuthMiddleware, httpLink])
 
 const wsLinkAuth = new WebSocketLink({
-  uri: `ws://localhost:4000`,
+  uri: process.env.GRAPHQL_WS || 'ws://localhost:3000',
   options: {
     reconnect: true,
     connectionParams: {

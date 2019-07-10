@@ -1,13 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { ApolloProvider } from 'react-apollo'
+import { Provider } from 'react-redux'
 import client from './apollo'
+import store from './store'
+import RootContainer from './components/RootContainer';
 
-//const token = localStorage.getItem('token')
+import 'tachyons'
+import './assets/styles/app.scss'
+
+
+const token = localStorage.getItem('token')
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <div></div>
+    <Provider store={store}>
+      <RootContainer token={token} />
+    </Provider>
   </ApolloProvider>,
   document.getElementById('root')
 )
