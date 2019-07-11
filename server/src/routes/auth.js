@@ -34,22 +34,22 @@ router.post('/auth/signup', async (req, res, next) => {
         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
       })
 
-    return res.statusCode(201)
+    passport.authenticate('local', (err, user, info) => {
+      if (err) {
+        return res.status(422).json({errors: err})
+      }
+
+      if (user) {
+        return res.status(200).json({user})
+      }
+    })
 
   } catch (err) {
     console.log(err)
     return res.status(422).json({err})
   }
 
-  // passport.authenticate('local', (err, user, info) => {
-  //   if (err) {
-  //     return res.status(422).json({errors: err})
-  //   }
 
-  //   if (user) {
-  //     return res.status(200).json({user})
-  //   }
-  // })(req, res, next)
 })
 
 module.exports = router

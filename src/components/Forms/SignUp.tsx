@@ -31,14 +31,12 @@ const SignUpForm = () => {
         dispatch({type: 'AUTH_SIGNUP'})
 
         signUp(values.email, values.password)
-          .then((resp) => {
+          .then(() => {
             setSubmitting(false)
-            console.log(resp)
           })
           .catch((e) => {
             setSubmitting(false)
-            setStatus({msg: 'error'})
-            console.log(e)
+            setStatus({msg: e.response.data.error})
           })
       }}
     >
