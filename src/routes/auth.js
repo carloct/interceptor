@@ -2,6 +2,8 @@ const express = require('express')
 const bcrypt = require('bcrypt')
 const { check, validationResult } = require('express-validator')
 const { User } = require('../models/user')
+const passport = require('../config/passport')
+const jwtService = require('../services/jwt')
 
 const router = express.Router()
 
@@ -36,13 +38,16 @@ router.post('/auth/signup', async (req, res, next) => {
 
     passport.authenticate('local', (err, user, info) => {
       if (err) {
+        console.log(err);
         return res.status(422).json({errors: err})
       }
 
       if (user) {
-        return res.status(200).json({user})
+        console.log(user)
+        const token = jwtService.create(user)
+        return res.status(201).json({ jwt: token})
       }
-    })
+    })(req, res)
 
   } catch (err) {
     console.log(err)

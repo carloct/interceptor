@@ -1,47 +1,26 @@
 version: '3.6'
 services:
-  # reverse-proxy:
-  #   image: traefik
-  #   command: --api --docker
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #     - "8888:8888"
-  #     - "8080:8080"
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - ./docker/traefik/config.toml:/traefik.toml
 
   postgres:
     image: postgres:10.3
     ports:
       - "5432:5432"
     restart: always
-    environment:
-      POSTGRES_USER: hasura
-      POSTGRES_PASSWORD: hasura
     volumes:
       - pgdata:/var/lib/postgresql/data
+    env_file:
+      - .env
 
   graphql-engine:
     image: hasura/graphql-engine:v1.0.0-beta.2
     depends_on:
       - "postgres"
     restart: always
-    # labels:
-    #   - "traefik.frontend.rule=Host:graphql.localhost"
-    #   - "traefik.port=8080"
-    environment:
-      # database url to connect
-      HASURA_GRAPHQL_DATABASE_URL: postgres://hasura:hasura@postgres:5432/hasura
-      # enable the console served by server
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set "false" to disable console
-      ## uncomment next line to set an admin secret key
-      HASURA_GRAPHQL_ADMIN_SECRET: secret
-      HASURA_GRAPHQL_JWT_SECRET: '{ "type": "HS256", "key": "secret" }'
     command:
     - graphql-engine
     - serve
+    env_file:
+      - .env
 
   caddy:
     image: abiosoft/caddy:0.11.0

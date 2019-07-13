@@ -15,6 +15,7 @@ module.exports = {
         "x-hasura-default-role": "user"
       }
     }
-  },
-  sign: payload => jwt.sign(payload, secret)
+
+    return jwt.sign(claim, secret)
+  }
 }
