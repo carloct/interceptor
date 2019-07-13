@@ -18,6 +18,10 @@ app.use(passport.session())
 
 app.use('/api', routes)
 
+app.get('/test', (req, res) => {
+  res.send({test: "ok"})
+})
+
 app.listen(app.get('port'), () => {
   console.log(
     '%s App is running at http://localhost:%d in %s mode',
