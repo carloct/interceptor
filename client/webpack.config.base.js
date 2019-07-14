@@ -81,7 +81,7 @@ module.exports = {
               plugins: () => [postcssImport, postcssUrl, postcssPresetEnv, autoprefixer, cssnano],
             },
           },
-          { loader: 'resolve-url-loader'},
+          { loader: 'resolve-url-loader', options: { debug: true }},
           { loader: 'sass-loader', options: { sourceMap: !devMode }}
         ],
       },
@@ -139,10 +139,7 @@ module.exports = {
       '.ts',
       '.tsx',
       '.js',
-      '.jsx',
-      '.json',
-      '.css',
-      '.scss',
+      '.jsx'
     ],
   },
 }

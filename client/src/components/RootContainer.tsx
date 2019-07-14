@@ -2,7 +2,6 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Layout from './Layout'
 import HomePage from '../pages/HomePage'
-import Header from './Layout/Header'
 import SignUpPage from '../pages/Auth/SignUpPage';
 
 
@@ -20,7 +19,6 @@ class RootContainer extends React.Component<Props> {
     return (
       <Router>
         <Layout>
-          <Header />
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/signup" component={SignUpPage} />
