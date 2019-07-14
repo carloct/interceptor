@@ -1,15 +1,16 @@
-import path from 'path';
-import merge from 'webpack-merge';
+const path = require('path')
+const merge = require('webpack-merge')
 
-import BaseWebpackConfig from  './webpack.config.base.babel';
+const BaseWebpackConfig = require('./webpack.config.base')
 
-export default merge(BaseWebpackConfig, {
+module.exports = merge(BaseWebpackConfig, {
 
   entry: {
     app: [
       './src/index',
     ],
   },
+  mode: 'development',
 
   output: {
     path: path.resolve(__dirname, 'dist/dev'),
@@ -18,10 +19,10 @@ export default merge(BaseWebpackConfig, {
   },
 
   devServer: {
-    port: process.env.PORT_WEBPACK_DEV_SERVER || 3004,
+    port: process.env.PORT_WEBPACK_DEV_SERVER || 4000,
     proxy: {
       '/api': {
-        target: `http://localhost:${process.env.PORT || 3003}`,
+        target: `http://localhost:${process.env.PORT || 3001}`,
         secure: false,
       },
     },

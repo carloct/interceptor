@@ -6,7 +6,6 @@ import client from './apollo'
 import store from './store'
 import RootContainer from './components/RootContainer';
 
-import 'tachyons'
 import './assets/styles/app.scss'
 
 

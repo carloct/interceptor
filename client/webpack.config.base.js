@@ -1,28 +1,40 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import Dotenv from 'dotenv-webpack';
-import StyleLintPlugin from 'stylelint-webpack-plugin';
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const DotenvPlugin = require('dotenv-webpack')
+const StyleLintPlugin = require('stylelint-webpack-plugin')
+const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
-import postcssPresetEnv from 'postcss-preset-env';
-import postcssImport from 'postcss-import';
-import postcssUrl from 'postcss-url';
-import autoprefixer from 'autoprefixer';
-import cssnano from 'cssnano';
+const postcssPresetEnv = require('postcss-preset-env')
+const postcssImport = require('postcss-import')
+const postcssUrl = require('postcss-url')
+const autoprefixer = require('autoprefixer')
+const cssnano = require('cssnano')
 
 const devMode = process.env.NODE_ENV !== 'production';
 
-export default {
+module.exports = {
   context: path.resolve(__dirname),
 
   mode: process.env.NODE_ENV,
+  target: 'web',
 
   module: {
     rules: [
       {
         test: /\.tsx?$/,
+        exclude: /node_modules/,
         use: [
-          { loader: 'ts-loader' }
+          {
+            loader: 'ts-loader',
+            options: {
+              compilerOptions: {
+                sourceMap: devMode ? 'inline-source-map': false,
+              }
+            }
+          }
         ]
       },
       {
@@ -34,6 +46,7 @@ export default {
             options: {
               sourceMap: !devMode,
               importLoaders: 1,
+              modules: true
             },
           },
           {
@@ -60,8 +73,7 @@ export default {
             options: {
               sourceMap: !devMode,
               importLoaders: 2,
-              modules: true,
-              localIdentName: '[local]',
+              modules: true
             },
           },
           {
@@ -101,8 +113,20 @@ export default {
       title: 'Dev',
       template: path.resolve(__dirname, 'public/index.ejs'),
     }),
-    new Dotenv(),
-    new StyleLintPlugin()
+    new CopyWebpackPlugin([
+      {
+        from: 'public',
+        ignore: ['index.ejs'],
+      },
+    ]),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash:10].css',
+      chunkFilename: '[name].[contenthash:10].css',
+    }),
+    new DotenvPlugin(),
+    new StyleLintPlugin(),
+    new DuplicatePackageCheckerPlugin(),
+    new ForkTsCheckerWebpackPlugin()
   ],
 
   resolve: {

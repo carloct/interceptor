@@ -2,13 +2,13 @@
   "name": "es6-react-pg",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "src/index.tsx",
   "scripts": {
-    "dev": "webpack --watch --mode development",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --hot --config webpack.config.dev.babel.js",
-    "test": "jest",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --config webpack.config.dev.js",
+    "build": "yarn clean && cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
     "clean": "trash dist",
-    "client:eslint": "eslint frontend/**/*.ts"
+    "client:eslint": "eslint src/**/*.ts",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -19,12 +19,14 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.4.4",
     "@testing-library/react": "^8.0.4",
+    "@types/graphql": "^14.2.2",
     "@types/jest": "^24.0.15",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "@types/react-modal": "^3.8.2",
     "@types/react-redux": "^7.1.1",
     "@types/react-router-dom": "^4.3.3",
+    "@types/ws": "^6.0.1",
     "@types/yup": "^0.26.20",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
@@ -32,11 +34,13 @@
     "autoprefixer": "^9.5.1",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^5.0.3",
     "cross-env": "^5.2.0",
     "css-loader": "^1.0.1",
     "cssnano": "^4.1.10",
     "cypress": "^3.4.0",
     "dotenv-webpack": "^1.7.0",
+    "duplicate-package-checker-webpack-plugin": "^3.0.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-compat": "^3.1.1",
@@ -44,6 +48,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
     "file-loader": "^3.0.1",
+    "fork-ts-checker-webpack-plugin": "^1.4.0",
     "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^4.6.0",
     "jest": "^24.8.0",
@@ -63,7 +68,7 @@
     "stylelint-scss": "^3.8.0",
     "stylelint-webpack-plugin": "^0.10.5",
     "trash-cli": "^1.4.0",
-    "ts-loader": "^5.3.3",
+    "ts-loader": "^6.0.4",
     "typescript": "^3.4.3",
     "typings-for-css-modules-loader": "^1.7.0",
     "url-loader": "^1.1.2",
@@ -71,10 +76,10 @@
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.4.1",
     "webpack-merge": "^4.2.1",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "workbox-webpack-plugin": "^4.3.1"
   },
   "dependencies": {
-    "@auth0/auth0-spa-js": "^1.0.2",
     "apollo-boost": "^0.4.3",
     "apollo-link-ws": "^1.0.18",
     "axios": "^0.18.0",
@@ -92,10 +97,16 @@
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "subscriptions-transport-ws": "^0.9.16",
-    "tachyons": "^4.11.1",
+    "webpack-manifest-plugin": "^2.0.4",
     "yup": "^0.27.0"
   },
   "browserslist": [
-    "defaults"
-  ]
+    "> 1%",
+    "last 2 versions"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
+  }
 }

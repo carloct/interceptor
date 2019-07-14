@@ -9,3 +9,6 @@ node_modules/
 
 # Logs
 yarn-error.log
+
+# Client
+client/dist
