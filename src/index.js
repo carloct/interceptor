@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const bodyParser = require('body-parser')
 const chalk = require('chalk')
 const passport = require('passport')
@@ -21,6 +22,12 @@ app.use('/api', routes)
 app.get('/test', (req, res) => {
   res.send({test: "ok"})
 })
+
+app.use(express.static(path.resolve(__dirname, '..', 'client', 'dist')))
+
+app.get("*", (req, res) => {
+  res.sendfile(path.join(__dirname, '..', 'client', 'dist', 'index.html'))
+});
 
 app.listen(app.get('port'), () => {
   console.log(

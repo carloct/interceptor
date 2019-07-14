@@ -58,6 +58,7 @@
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.6.0",
     "postcss-url": "^8.0.0",
+    "resolve-url-loader": "^3.1.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "stylelint": "^10.1.0",
@@ -96,6 +97,8 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.87.3",
     "subscriptions-transport-ws": "^0.9.16",
     "webpack-manifest-plugin": "^2.0.4",
     "yup": "^0.27.0"

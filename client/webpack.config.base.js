@@ -31,7 +31,7 @@ module.exports = {
             loader: 'ts-loader',
             options: {
               compilerOptions: {
-                sourceMap: devMode ? 'inline-source-map': false,
+                sourceMap: !devMode,
               }
             }
           }
@@ -46,7 +46,6 @@ module.exports = {
             options: {
               sourceMap: !devMode,
               importLoaders: 1,
-              modules: true
             },
           },
           {
@@ -73,7 +72,6 @@ module.exports = {
             options: {
               sourceMap: !devMode,
               importLoaders: 2,
-              modules: true
             },
           },
           {
@@ -83,6 +81,7 @@ module.exports = {
               plugins: () => [postcssImport, postcssUrl, postcssPresetEnv, autoprefixer, cssnano],
             },
           },
+          { loader: 'resolve-url-loader'},
           { loader: 'sass-loader', options: { sourceMap: !devMode }}
         ],
       },
