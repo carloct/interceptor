@@ -7,7 +7,7 @@
     "start": "node src/index.js",
     "dev": "nodemon -e js -x node -r dotenv/config src/index.js",
     "debug": "nodemon -e js -x node --inspect -r dotenv/config src/index.js",
-    "build-client": "cd client && yarn build",
+    "build-client": "cd client && yarn && yarn build",
     "heroku-prebuild": "yarn build-client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
