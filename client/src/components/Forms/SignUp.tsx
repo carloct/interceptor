@@ -1,9 +1,10 @@
 import React from 'react'
 import * as yup from 'yup'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage, FormikProps } from 'formik'
 import { TextField, ErrorText } from './CustomControls';
 import { signUp } from '../../actions/auth'
+import history from '../../lib/history';
 
 interface SignUpFormValues {
   email: string;
@@ -19,7 +20,8 @@ const schema = yup.object({
 
 
 const SignUpForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+  const auth = useSelector((state: any) => state.auth)
 
   return (
     <Formik
@@ -27,25 +29,32 @@ const SignUpForm = () => {
       validationSchema={schema}
       onSubmit={(values, { setSubmitting, setStatus }) => {
 
-        setSubmitting(true)
+        setSubmitting(auth.isSubmitting)
         dispatch({type: 'AUTH_SIGNUP'})
 
         signUp(values.email, values.password)
-          .then(() => {
+          .then((resp) => {
+            console.log(resp)
             setSubmitting(false)
+            dispatch({type: 'AUTH_SIGNUP_OK', payload: resp.data})
+            history.push("/dashboard")
           })
           .catch((e) => {
+            const error = (e.response) ?  e.response.data.error : "Error";
+            console.log(e)
+
             setSubmitting(false)
-            setStatus({msg: e.response.data.error})
+            setStatus({msg: error})
+            dispatch({type: 'AUTH_SIGNUP_ERR', error: 'error'})
           })
       }}
     >
       {( props: FormikProps<SignUpFormValues> ) => {
 
         return (
-          <div className="tl">
-            <Form className="pa4 black-80">
-              <div className="measure">
+          <div className="">
+            <Form className="">
+              <div className="">
                 <Field name="email" type="text" label="Email" component={TextField} />
                 <ErrorMessage name="email" component={ErrorText} />
                 <Field name="password" type="password" label="Password" component={TextField}/>
@@ -53,7 +62,7 @@ const SignUpForm = () => {
                 <Field name="confirmPassword" type="password" label="Confirm password" component={TextField}/>
                 <ErrorMessage name="confirmPassword" component={ErrorText} />
                 { props.status && props.status.msg && <div>{props.status.msg}</div> }
-                <button type="submit" className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6" disabled={props.isSubmitting}>Register</button>
+                <button type="submit" className="" disabled={props.isSubmitting}>Register</button>
               </div>
             </Form>
           </div>

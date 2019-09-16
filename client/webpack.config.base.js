@@ -124,8 +124,8 @@ module.exports = {
     }),
     new DotenvPlugin(),
     new StyleLintPlugin(),
-    new DuplicatePackageCheckerPlugin(),
-    new ForkTsCheckerWebpackPlugin()
+    // new DuplicatePackageCheckerPlugin(),
+    // new ForkTsCheckerWebpackPlugin()
   ],
 
   resolve: {

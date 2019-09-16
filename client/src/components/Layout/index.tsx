@@ -1,5 +1,4 @@
-import React, { ReactNode } from 'react'
-import { Container, Grid } from 'semantic-ui-react'
+import React, { ReactNode} from 'react'
 import Header from './Header'
 
 interface Props {
@@ -7,16 +6,12 @@ interface Props {
 }
 
 const Layout = (props: Props) => (
-  <Container fluid>
+  <div className="app-admin-wrap layout-horizontal-bar clearfix">
     <Header />
-    <Grid>
-      <Grid.Column>
-
-      </Grid.Column>
-
+    <div className="main-content-wrap  d-flex flex-column">
       {props.children}
-    </Grid>
-  </Container>
+    </div>
+  </div>
 
 )
 

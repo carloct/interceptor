@@ -3,8 +3,8 @@ import SignUpForm from '../../components/Forms/SignUp';
 
 const SignUpPage = () => {
   return (
-    <div className="dt mw6 center pv4 pv5-m pv6-ns">
-      <div className="dtc v-mid">
+    <div className="">
+      <div className="">
         <SignUpForm />
       </div>
     </div>

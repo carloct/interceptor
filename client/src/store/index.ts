@@ -1,16 +1,13 @@
-import { createStore } from 'redux'
-import { ActionType } from './types';
+import { createStore, combineReducers, Reducer} from 'redux'
+import { devToolsEnhancer } from 'redux-devtools-extension'
+import { authReducer } from './auth'
+import { AppState } from './types';
 
-const initalState = {
-  auth: null
-}
+const reducer: Reducer<AppState> = combineReducers<AppState>({
+  auth: authReducer
+})
 
-const authReducer = (state = initalState, action: ActionType) => {
-  console.log(action)
-  return state
-}
-
-const store = createStore(authReducer)
+const store = createStore(reducer, /* preloadedState */ devToolsEnhancer({}))
 
 export default store
 
