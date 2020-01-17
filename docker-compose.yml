@@ -1,24 +1,21 @@
-version: '3.6'
+version: "3.6"
 services:
-
   postgres:
     image: postgres:10.3
     ports:
       - "5432:5432"
-    restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data
     env_file:
       - .env
 
   graphql-engine:
-    image: hasura/graphql-engine:v1.0.0-beta.4
+    image: hasura/graphql-engine
     depends_on:
       - "postgres"
-    restart: always
     command:
-    - graphql-engine
-    - serve
+      - graphql-engine
+      - serve
     env_file:
       - .env
 
@@ -26,13 +23,19 @@ services:
     image: abiosoft/caddy:0.11.0
     depends_on:
       - "graphql-engine"
-    restart: always
     ports:
       - "8080:8080"
       - "443:443"
     volumes:
       - ./docker/caddy/Caddyfile:/etc/Caddyfile
       - caddy_certs:/root/.caddy
+
+  # pgadmin:
+  #   image: page/pgadmin4
+  #   ports:
+  #     - "8888:8888"
+  #   env_file:
+  #     - .env
 
 volumes:
   pgdata: ~
