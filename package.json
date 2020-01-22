@@ -7,8 +7,8 @@
     "start": "node src/index.js",
     "dev": "nodemon -e js -x node -r dotenv/config src/index.js",
     "debug": "nodemon -e js -x node --inspect -r dotenv/config src/index.js",
-    "build-client": "cd client && yarn && trash dist && cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
-    "heroku-prebuild": "yarn global add trash-cli cross-env",
+    "build-client": "cd client && yarn && yarn build",
+    "heroku-prebuild": "yarn global add trash-cli cross-env webpack-cli",
     "heroku-postbuild": "yarn build-client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,6 +20,7 @@
     "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
     "cors": "^2.8.5",
+    "cross-env": "^6.0.3",
     "express": "^4.17.1",
     "express-validator": "^6.1.1",
     "glob": "^7.1.4",
@@ -33,7 +34,10 @@
   },
   "devDependencies": {
     "dotenv": "^8.0.0",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "trash-cli": "^3.0.0",
+    "webpack-cli": "^3.3.10",
+    "webpack": "^4.41.5"
   },
   "engines": {
     "node": "12.x"
