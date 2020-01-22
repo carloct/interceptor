@@ -1,21 +1,35 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { useAuth0 } from "../../react-auth0-spa";
 
 const spacerStyle = {
-  margin: 'auto'
-}
+  margin: "auto"
+};
 
-const Header = () => (
-  <div className="main-header">
-    <div className="logo">
-      <img src="/images/logo.png" />
-    </div>
-    <div style={spacerStyle}></div>
-    <div className="header-part-right">
-      <Link to="/login" className="mr-3">Log in</Link>
-      <Link to="/signup" className="btn btn-outline-primary m-1 mr-3">Sign up</Link>
-    </div>
-  </div>
-)
+const Header = () => {
+  const {
+    isAuthenticated,
+    loginWithRedirect,
+    logout
+    //getTokenSilently
+  } = useAuth0();
 
-export default Header
+  //console.log(getTokenSilently);
+
+  return (
+    <div className="main-header">
+      <div className="logo">
+        <img src="/images/logo.png" />
+      </div>
+      <div style={spacerStyle}></div>
+      <div className="header-part-right">
+        {!isAuthenticated && (
+          <button onClick={() => loginWithRedirect({})}>Log in</button>
+        )}
+
+        {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
+      </div>
+    </div>
+  );
+};
+
+export default Header;
