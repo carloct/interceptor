@@ -1,18 +1,16 @@
-import React, { ReactNode} from 'react'
-import Header from './Header'
+import React, { ReactNode } from "react";
+import Header from "./Header";
+import MainContent from "./MainContent";
 
 interface Props {
   children: ReactNode;
 }
 
 const Layout = (props: Props) => (
-  <div className="app-admin-wrap layout-horizontal-bar clearfix">
+  <div>
     <Header />
-    <div className="main-content-wrap  d-flex flex-column">
-      {props.children}
-    </div>
+    <MainContent>{props.children}</MainContent>
   </div>
+);
 
-)
-
-export default Layout
+export default Layout;

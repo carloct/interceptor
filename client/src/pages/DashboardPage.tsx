@@ -1,13 +1,15 @@
-import React from 'react'
-import MainContent from '../components/Layout/MainContent'
+import React from "react";
+import MainContent from "../components/Layout/MainContent";
+import EndpointList from "../components/Layout/EndpointList";
 
 const DashboardPage = () => {
   return (
     <MainContent>
-      <div>Dashboard</div>
+      <>
+        <EndpointList />
+      </>
     </MainContent>
+  );
+};
 
-  )
-}
-
-export default DashboardPage
+export default DashboardPage;

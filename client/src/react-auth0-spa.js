@@ -16,6 +16,7 @@ export const Auth0Provider = ({
   const [auth0Client, setAuth0Client] = useState();
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
+  const [idToken, setIdToken] = useState("");
 
   useEffect(() => {
     const initAuth0 = async () => {
@@ -47,7 +48,7 @@ export const Auth0Provider = ({
     try {
       await auth0Client.loginWithPopup(params);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     } finally {
       setPopupOpen(false);
     }
@@ -60,19 +61,18 @@ export const Auth0Provider = ({
   const handleRedirectCallback = async () => {
     setLoading(true);
 
-    await auth0Client.handleRedirectCallback();
+    const result = await auth0Client.handleRedirectCallback();
     const user = await auth0Client.getUser();
+    const idTokenClaims = await auth0Client.getIdTokenClaims();
+
+    //console.log("id", idTokenClaims);
+
+    setIdToken(getIdTokenClaims.__raw);
     setLoading(false);
     setIsAuthenticated(true);
     setUser(user);
-  };
 
-  const getTokenSilently = async () => {
-    try {
-      await auth0Client.getTokenSilently();
-    } catch (error) {
-      console.log(error);
-    }
+    return result;
   };
 
   return (
@@ -84,10 +84,10 @@ export const Auth0Provider = ({
         popupOpen,
         loginWithPopup,
         handleRedirectCallback,
-        getTokenSilently,
+        idToken,
         getIdTokenClaims: (...p) => auth0Client.getIdTokenClaims(...p),
         loginWithRedirect: (...p) => auth0Client.loginWithRedirect(...p),
-        //getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),
+        getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),
         getTokenWithPopup: (...p) => auth0Client.getTokenWithPopup(...p),
         logout: (...p) => auth0Client.logout(...p)
       }}

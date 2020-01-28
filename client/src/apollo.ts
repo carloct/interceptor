@@ -1,53 +1,66 @@
-import { HttpLink, InMemoryCache, ApolloClient } from 'apollo-boost'
-import { WebSocketLink } from 'apollo-link-ws'
-import { ApolloLink, split } from 'apollo-boost'
-import { getMainDefinition } from 'apollo-utilities'
+import { HttpLink, InMemoryCache, ApolloClient } from "apollo-boost";
+//import { WebSocketLink } from 'apollo-link-ws'
+// import { ApolloLink, split } from "apollo-boost";
+//import { getMainDefinition } from "apollo-utilities";
 
+const createApolloClient = authToken => {
+  return new ApolloClient({
+    link: new HttpLink({
+      uri: process.env.GRAPHQL_URI,
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    }),
+    cache: new InMemoryCache()
+  });
+};
 
-const httpLink = new HttpLink({ uri: process.env.GRAPHQL_URI })
+export default createApolloClient;
 
-const httpAuthMiddleware = new ApolloLink((operation, forward) => {
-  const token = localStorage.getItem('token')
+// const httpLink = new HttpLink({ uri: process.env.GRAPHQL_URI })
 
-  operation.setContext({
-    headers: {
-      Authorization: token ? `Bearer ${token}` : ''
-    }
-  })
+// const httpAuthMiddleware = new ApolloLink((operation, forward) => {
+//   const token = localStorage.getItem('token')
 
-  return (forward) ? forward(operation) : null
-})
+//   operation.setContext({
+//     headers: {
+//       Authorization: token ? `Bearer ${token}` : ''
+//     }
+//   })
 
-const httpLinkAuth = ApolloLink.from([httpAuthMiddleware, httpLink])
+//   return (forward) ? forward(operation) : null
+// })
 
-const wsLinkAuth = new WebSocketLink({
-  uri: process.env.GRAPHQL_WS || 'ws://localhost:3000',
-  options: {
-    reconnect: true,
-    connectionParams: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  },
-})
+//const httpLinkAuth = ApolloLink.from([httpAuthMiddleware, httpLink])
 
-const link = split(
-  // split based on operation type
-  ({ query }) => {
-    const def: any = getMainDefinition(query);
-    if (def.operation) {
-      return def.kind === 'OperationDefinition' && def.operation === 'subscription'
-    }
+// const wsLinkAuth = new WebSocketLink({
+//   uri: process.env.GRAPHQL_WS || 'ws://localhost:3000',
+//   options: {
+//     reconnect: true,
+//     connectionParams: {
+//       Authorization: `Bearer ${localStorage.getItem('token')}`,
+//     },
+//   },
+// })
 
-    return false
-  },
-  wsLinkAuth,
-  httpLinkAuth,
-)
+// const link = split(
+//   // split based on operation type
+//   ({ query }) => {
+//     const def: any = getMainDefinition(query);
+//     if (def.operation) {
+//       return def.kind === 'OperationDefinition' && def.operation === 'subscription'
+//     }
 
-const client = new ApolloClient({
-  link: ApolloLink.from([link]),
-  cache: new InMemoryCache(),
-  connectToDevTools: true,
-})
+//     return false
+//   },
+//   wsLinkAuth,
+//   httpLinkAuth,
+// )
 
-export default client
+// const client = new ApolloClient({
+//   link: ApolloLink.from([link]),
+//   cache: new InMemoryCache(),
+//   connectToDevTools: true,
+// })
+
+//export default client
