@@ -6,7 +6,7 @@ const Auth0CallbackPage = () => {
   const { handleAuthentication } = useAuth();
 
   useEffect(() => {
-    handleAuthentication();
+    handleAuthentication({ postLoginRoute: "/dashboard" });
   }, []);
 
   return <h1>Callback page</h1>;

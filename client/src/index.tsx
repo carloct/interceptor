@@ -21,14 +21,6 @@ import "./assets/styles/App.css";
 
 ReactDOM.render(
   <Provider store={store}>
-    {/* <Auth0Provider
-      domain={process.env.AUTH0_DOMAIN}
-      client_id={process.env.AUTH0_CLIENTID}
-      redirect_uri={window.location.origin}
-      onRedirectCallback={onRedirectCallback}
-    > */}
-
-    {/* </Auth0Provider> */}
     <AuthProvider
       navigate={history.push}
       auth0_domain={process.env.AUTH0_DOMAIN || ""}

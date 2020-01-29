@@ -1,14 +1,15 @@
 import React from "react";
-import MainContent from "../components/Layout/MainContent";
 import EndpointList from "../components/Layout/EndpointList";
+import BlockLeft from "../components/Layout/BlockLeft";
+import PaneLeft from "../components/Layout/PaneLeft";
 
 const DashboardPage = () => {
   return (
-    <MainContent>
-      <>
+    <BlockLeft>
+      <PaneLeft>
         <EndpointList />
-      </>
-    </MainContent>
+      </PaneLeft>
+    </BlockLeft>
   );
 };
 

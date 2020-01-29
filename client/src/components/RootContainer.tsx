@@ -15,20 +15,15 @@ import Auth0CallbackPage from "../pages/AuthCallback";
 import { useAuth } from "react-use-auth";
 
 const RootContainer = () => {
-  //const auth = useSelector((state: AppState) => state.auth);
-  //const { isLoading, idToken } = useAuth0();
+  let idToken = "";
 
-  //console.log(useAuth0());
+  const { authResult } = useAuth();
 
-  //const { isAuthenticated } = useAuth();
+  if (typeof authResult !== "undefined" && authResult !== null) {
+    idToken = authResult.idToken;
+  }
 
-  console.log(useAuth());
-
-  const apolloClient = createApolloClient("23");
-
-  // if (isAuthenticated() === false) {
-  //   return <div>Loading ...</div>;
-  // }
+  const apolloClient = createApolloClient(idToken);
 
   return (
     <Router history={history}>
